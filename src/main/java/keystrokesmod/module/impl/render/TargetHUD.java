@@ -40,7 +40,7 @@ public class TargetHUD extends Module {
     public EntityLivingBase renderEntity;
     public int posX = 70;
     public int posY = 30;
-    private String[] modes = new String[]{ "Modern", "Legacy" };
+    private String[] modes = new String[]{ "Modern", "Legacy", "Simple" };
 
     public TargetHUD() {
         super("TargetHUD", category.render);
@@ -141,12 +141,15 @@ public class TargetHUD extends Module {
                 case 1:
                     RenderUtils.drawRoundedGradientOutlinedRectangle((float) n6, (float) n7, (float) n8, (float) (n9 + 13), 10.0f, Utils.mergeAlpha(Color.black.getRGB(), maxAlphaOutline), Utils.mergeAlpha(gradientColors[0], alpha), Utils.mergeAlpha(gradientColors[1], alpha));
                     break;
+                case 2:
+                    RenderUtils.drawRoundedRectangle((float) n6, (float) n7, Math.abs((float) n6 - n8), Math.abs((float) n7 - (n9 + 13)), 8.0f, new Color(0, 0, 0, maxAlphaBackground).getRGB());
+                    break;
             }
             final int n13 = n6 + 6;
             final int n14 = n8 - 6;
             final int n15 = n9;
 
-            // Bar background
+
             RenderUtils.drawRoundedRectangle((float) n13, (float) n15, (float) n14, (float) (n15 + 5), 4.0f, Utils.mergeAlpha(Color.black.getRGB(), maxAlphaOutline));
             int mergedGradientLeft = Utils.mergeAlpha(gradientColors[0], maxAlphaBackground);
             int mergedGradientRight = Utils.mergeAlpha(gradientColors[1], maxAlphaBackground);
@@ -169,17 +172,20 @@ public class TargetHUD extends Module {
             if (healthColor.isToggled()) {
                 mergedGradientLeft = mergedGradientRight = Utils.mergeAlpha(Utils.getColorForHealth(health), maxAlphaBackground);
             }
-            if (lastHealthBar > n14) { // exceeds total width then clamp
+            if (lastHealthBar > n14) {
                 lastHealthBar = n14;
             }
 
-            switch ((int) mode.getInput()) { // health bar
+            switch ((int) mode.getInput()) {
                 case 0:
                     RenderUtils.drawRoundedRectangle((float) n13, (float) n15, lastHealthBar, (float) (n15 + 5), 4.0f, Utils.darkenColor(mergedGradientRight, 25));
                     RenderUtils.drawRoundedGradientRect((float) n13, (float) n15, smoothBack ? lastHealthBar : healthBar, (float) (n15 + 5), 4.0f, mergedGradientLeft, mergedGradientLeft, mergedGradientRight, mergedGradientRight);
                     break;
                 case 1:
                     RenderUtils.drawRoundedGradientRect((float) n13, (float) n15, lastHealthBar, (float) (n15 + 5), 4.0f, mergedGradientLeft, mergedGradientLeft, mergedGradientRight, mergedGradientRight);
+                    break;
+                case 2:
+                    RenderUtils.drawRoundedRectangle((float) n13, (float) n15, lastHealthBar, (float) (n15 + 5), 4.0f, mergedGradientLeft);
                     break;
             }
             GL11.glPushMatrix();

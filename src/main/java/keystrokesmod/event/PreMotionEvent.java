@@ -86,10 +86,9 @@ public class PreMotionEvent extends Event {
         return setRenderYaw;
     }
 
-    public static void setRenderYaw(boolean setYaw) {
-        setRenderYaw = setYaw;
+    public void setRenderYaw(boolean setRenderYaw) {
+        this.setRenderYaw = setRenderYaw;
     }
-
     public boolean isSprinting() {
         return isSprinting;
     }
